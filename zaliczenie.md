@@ -29,7 +29,8 @@ reddit
 system.indexes
 ```
 Policzyłam wszystkie jsony:
-![procesor](img/obraz3.png)
+
+![json](img/obraz3.png)
 
 Przykładowe zapytania:
 * znajdź pierwsze:
