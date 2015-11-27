@@ -32,9 +32,9 @@ Policzyłam wszystkie jsony:
 
 ![json](img/obraz3.png)
 
-Przykładowe zapytania:
+##### Dodałam przykładowe zapytania:
 
-* znajdź pierwsze:
+* znajdź pierwszy:
 ```sh
 > db.reddit.findOne()
 {
@@ -63,7 +63,7 @@ Przykładowe zapytania:
 }
 > 
 ```
-* znajdź ostatnie:
+* znajdź ostatni:
 ```sh
 > db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
 {
@@ -92,7 +92,7 @@ Przykładowe zapytania:
 }
 > 
 ```
-* wyświetlenie postów z liczbą polubień ponad 6000 ("ups") - największy wynik:
+* wyświetlenie wpisów z liczbą polubień ponad 6000 ("ups") - największy wynik:
 ```sh
 db.reddit.find({ups: { $gte: 6000}})
 {
@@ -147,7 +147,7 @@ db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
 }
 Fetched 5 record(s) in 453257ms
 ```
-* wyświetlenie 5 pierwszych postów autora "coughdropz":
+* wyświetlenie 5 pierwszych wpisów autora "coughdropz":
 ```sh
 db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
 {
@@ -167,10 +167,11 @@ db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
 }
 Fetched 5 record(s) in 60668ms
 ```
-Historia procesora podczas wyszukiwania tych postów:
+Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
+
 ![wyszukiwanie](img/obraz4.png)
 
-###Zadanie 1b Postgres
+###Zadanie 1b Postgres (w przygotowaniu)
 
 ###Zadanie 2 GeoJSON
 
@@ -198,7 +199,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 	"ok" : 1
 }
 ```
-Dodałam przykładowe zapytania:
+##### Dodałam przykładowe zapytania:
 
 * znajdź pierwsze
 ```sh
