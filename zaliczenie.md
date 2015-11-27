@@ -62,7 +62,7 @@ Przykładowe zapytania:
 }
 > 
 ```
-*znajdź ostatnie:
+* znajdź ostatnie:
 ```sh
 > db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
 {
@@ -120,6 +120,33 @@ db.reddit.find({ups: { $gte: 6000}})
 }
 Fetched 3 record(s) in 646239ms
 ```
+* wyświetlenie 5 autorów wpisów nagrodzonych "złotem" siedmio- i ośmiokrotnie:
+```sh
+db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
+db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
+{
+  "author": "Xarasystral",
+  "gilded": 7
+}
+{
+  "gilded": 8,
+  "author": "coughdropz"
+}
+{
+  "gilded": 7,
+  "author": "lalaland40000"
+}
+{
+  "author": "IMoustacheYou",
+  "gilded": 7
+}
+{
+  "author": "desmunda1",
+  "gilded": 7
+}
+Fetched 5 record(s) in 453257ms
+```
+
 ###Zadanie 2
 
 #####Import pliku orlen.json do bazy MongoDB
