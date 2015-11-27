@@ -1,4 +1,4 @@
-###Zadanie 1a
+###Zadanie 1a MongoDB
 
 #####Import pliku RC_2015-01 do bazy MongoDB
 
@@ -12,9 +12,9 @@ Historia Procesora:
 
 ![procesor](img/obraz2.png)
 
-Procesory były obciążane równomiernie od 25 do 95 procent. Pamięć była wykorzystywana od 28 do 31 procent.
+Procesory były obciążone równomiernie od 25 do 95 procent. Pamięć była wykorzystywana od 28 do 31 procent.
 
-Połączyłam się z mongo, przeszłam do bazy testi wybrałam kolekcję reddit:
+Połączyłam się z mongo, przeszłam do bazy testy i wybrałam kolekcję reddit:
 ```sh
 mongo
 MongoDB shell version: 2.6.3
@@ -33,6 +33,7 @@ Policzyłam wszystkie jsony:
 ![json](img/obraz3.png)
 
 Przykładowe zapytania:
+
 * znajdź pierwsze:
 ```sh
 > db.reddit.findOne()
@@ -146,8 +147,32 @@ db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
 }
 Fetched 5 record(s) in 453257ms
 ```
+* wyświetlenie 5 pierwszych postów autora "coughdropz":
+```sh
+db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
+{
+  "body": "Expecting a big game from Nico Suave tonight!"
+}
+{
+  "body": "I got downvoted to hell for calling this guy a joke.  He's going to be demanding a starting position for the Bejing Ducks or some shit if he's not careful."
+}
+{
+  "body": "I backed it up!  Don't judge downvotes from a post you never read.  "
+}
+{
+  "body": "It has very little to do with his skill as an athlete and more to do with his negative basketball IQ, terrible shot selection, and HILARIOUSLY stupid comments to the media.  Get off your high horse, the guy who's shooting 28% from 3 while still jacking them up, talks shit about dread locks while sitting 10 feet from a teammate with dread locks, and gets WAIVED because he's such a fool the Pistons would rather pay him to play for someone else is a JOKE.  Not to mention he then demands a starting role instead of working to rehab his career.  Why do we have to play pretend for the sake of Josh Smith's feelings?  If you hurt your team, get waived, demand a starting role, and promptly shit the bed, you're a joke.\n\n"
+}
+{
+  "body": "He started it.  I have dread locks!"
+}
+Fetched 5 record(s) in 60668ms
+```
+Historia procesora podczas wyszukiwania tych postów:
+![wyszukiwanie](img/obraz4.png)
 
-###Zadanie 2
+###Zadanie 1b Postgres
+
+###Zadanie 2 GeoJSON
 
 #####Import pliku orlen.json do bazy MongoDB
 
@@ -175,7 +200,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 ```
 Dodałam przykładowe zapytania:
 
-*znajdź pierwsze
+* znajdź pierwsze
 ```sh
 > db.stacje.findOne()
 {
