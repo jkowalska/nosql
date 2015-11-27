@@ -173,7 +173,7 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 
 ###Zadanie 1b Postgres (w przygotowaniu)
 
-###Zadanie 2 GeoJSON
+###Zadanie 2 GeoJSON (pliki .geojson w przygotowaniu)
 
 #####Import pliku orlen.json do bazy MongoDB
 
