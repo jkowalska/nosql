@@ -1,0 +1,17 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name" : "Stacje paliw Orlen",
+    "city" : "Nowy Targ"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.021194,
+          49.453218
+        ]
+      }
+    }
+  ]
+}
