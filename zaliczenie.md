@@ -173,7 +173,7 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 
 ###Zadanie 1b Postgres (w przygotowaniu)
 
-###Zadanie 2 GeoJSON (pliki .geojson w przygotowaniu)
+###Zadanie 2 GeoJSON
 
 #####Import pliku orlen.json do bazy MongoDB
 
@@ -217,7 +217,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 	"city" : "Nowy Targ"
 }
 ```
-![geojson](img/test1.geojson "Point")
+![Geojson "Point"](img/test1.geojson "Point")
 
 * znajdź stacje Orlen oddalone od Władysławowa o maksymalnie o 25km:
 ```sh
@@ -229,7 +229,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 { "_id" : ObjectId("56587fbad3d1ab580a5633fc"), "loc" : { "type" : "Point", "coordinates" : [ 18.18959, 54.61076 ] }, "name" : "Stacje paliw Orlen", "city" : "Wejherowo" }
 { "_id" : ObjectId("56587fbad3d1ab580a563327"), "loc" : { "type" : "Point", "coordinates" : [ 18.42266, 54.56018 ] }, "name" : "Stacje paliw Orlen", "city" : "Rumia" }
 ```
-![geojson](img/test2.geojson "Point")
+![Geojson "Point"](img/test2.geojson "Point")
 
 * znajdź stacje w Pucku i najbliższych 3 miastach:
 ```sh
@@ -238,15 +238,15 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 { "_id" : ObjectId("56587fbad3d1ab580a563490"), "loc" : { "type" : "Point", "coordinates" : [ 18.4054, 54.77592 ] }, "name" : "Stacje paliw Orlen", "city" : "Władysławowo" }
 { "_id" : ObjectId("56587fbad3d1ab580a563614"), "loc" : { "type" : "Point", "coordinates" : [ 18.27235, 54.60235 ] }, "name" : "Stacje paliw Orlen", "city" : "Wejherowo" }
 ```
-![geojson](img/test3.geojson "Point")
+![Geojson "Point"](img/test3.geojson "Point")
 
-* znajdź stacje na linii Gdańsk - Szczecin:
+* znajdź stacje na linii Gdańsk - Lębork:
 ```sh
-> db.stacje.find({loc: {$geoIntersects: {$geometry: {type: "LineString", coordinates: [ [18.477135,54.380675], [14.570300,53.442940]]}}}})
+> db.stacje.find({loc: {$geoIntersects: {$geometry: {type: "LineString", coordinates: [ [18.477135,54.380675], [17.797210,54.551720]]}}}})
 { "_id" : ObjectId("56587fbad3d1ab580a56329a"), "loc" : { "type" : "Point", "coordinates" : [ 18.477135, 54.380675 ] }, "name" : "Stacje paliw Orlen", "city" : "Gdańsk" }
-{ "_id" : ObjectId("56587fbad3d1ab580a56337c"), "loc" : { "type" : "Point", "coordinates" : [ 14.5703, 53.44294 ] }, "name" : "Stacje paliw Orlen", "city" : "Szczecin" }
+{ "_id" : ObjectId("56587fbad3d1ab580a5633fe"), "loc" : { "type" : "Point", "coordinates" : [ 17.79721, 54.55172 ] }, "name" : "Stacje paliw Orlen", "city" : "Lębork" }
 ```
-![geojson](img/test4.geojson "LineString")
+![Geojson "LineString"](img/test4.geojson "LineString")
 
 * znajdź stacje w Słupsku i okolicach:
 ```sh
@@ -277,4 +277,4 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 { "_id" : ObjectId("56587fbad3d1ab580a5633c0"), "loc" : { "type" : "Point", "coordinates" : [ 16.96817, 54.45112 ] }, "name" : "Stacje paliw Orlen", "city" : "Kobylnica" }
 { "_id" : ObjectId("56587fbad3d1ab580a5632df"), "loc" : { "type" : "Point", "coordinates" : [ 16.99288, 54.45748 ] }, "name" : "Stacje paliw Orlen", "city" : "Słupsk" }
 ```
-![geojson](img/test5.geojson "Polygon")
+![Geojson "Polygon"](img/test5.geojson "Polygon")
