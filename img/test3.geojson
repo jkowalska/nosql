@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen": "Puck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.40589,
+          54.71592
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen": "Władysławowo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.4054,
+          54.77592
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen": "Wejherowo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.27235,
+          54.60235
+        ]
+      }
+    }
+  ]
+}
