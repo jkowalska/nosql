@@ -1,0 +1,80 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16.93817138671875,
+              54.410938637023676
+            ],
+            [
+              16.93817138671875,
+              54.51470449573694
+            ],
+            [
+              17.12493896484375,
+              54.51470449573694
+            ],
+            [
+              17.12493896484375,
+              54.410938637023676
+            ],
+            [
+              16.93817138671875,
+              54.410938637023676
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen": "Słupsk"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.04061, 54.46524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen": "Słupsk"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.02624, 54.47686
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen": "Kobylnica"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.96817, 54.45112
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Stacje paliw Orlen" : "Słupsk"},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.99288, 54.45748
+        ]
+      }
+    }
+  ]
+}
