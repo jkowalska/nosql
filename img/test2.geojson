@@ -4,8 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Stacje paliw Orlen",
-        "city": "Puck"
+        "Stacje paliw Orlen" : "Puck"
       },
       "geometry": {
         "type": "Point",
@@ -18,8 +17,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Stacje paliw Orlen",
-        "city": "Odargowo"
+        "Stacje paliw Orlen" : "Odargowo"
       },
       "geometry": {
         "type": "Point",
@@ -32,8 +30,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Stacje paliw Orlen",
-        "city": "Wejherowo"
+        "Stacje paliw Orlen" : "Wejherowo"
       },
       "geometry": {
         "type": "Point",
@@ -46,8 +43,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Stacje paliw Orlen",
-        "city": "Rumia
+        "Stacje paliw Orlen" : "Rumia
       },
       "geometry": {
         "type": "Point",
@@ -60,8 +56,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Stacje paliw Orlen",
-        "city": "Wejherowo"
+        "Stacje paliw Orlen" : "Wejherowo"
       },
       "geometry": {
         "type": "Point",
@@ -73,8 +68,7 @@
     },
     {
       "type": "Feature",
-      "properties": {"name": "Stacje paliw Orlen",
-        "city": "Rumia"},
+      "properties": {"Stacje paliw Orlen" : "Rumia"},
       "geometry": {
         "type": "Point",
         "coordinates": [
