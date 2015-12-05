@@ -17,7 +17,7 @@ Procesory były obciążone równomiernie od 25 do 95 procent. Pamięć była wy
 Połączyłam się z mongo, przeszłam do bazy testy i wybrałam kolekcję reddit:
 ```sh
 mongo
-MongoDB shell version: 2.6.3
+MongoDB shell version: 3.0.7
 connecting to: test
 > show dbs
 local	0.203125GB
@@ -98,8 +98,10 @@ Fetched 3 record(s) in 646239ms
 }
 Fetched 5 record(s) in 453257ms
 ```
-* 
+* zliczenie wszystkich wpisów w subreddicie "AskReddit":
 ```sh
+> db.reddit.find({subreddit: "AskReddit"}).count()
+4712795
 ```
 * wyświetlenie 5 pierwszych wpisów autora "coughdropz" (tylko nazwa autora i komentarz):
 ```sh
@@ -125,6 +127,39 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 
 ![wyszukiwanie](img/obraz4.png)
 
+* wyświetlanie 5 najbardziej aktywnych subredditów:
+```sh
+> db.reddit.aggregate([
+...   {$group:{_id: "$subreddit", count:{$sum: 1}}},
+...   {$sort:{count: -1}},
+...   {$limit: 5}
+...   ]);
+{
+  "result": [
+    {
+      "_id": "AskReddit",
+      "count": 4712795
+    },
+    {
+      "_id": "nfl",
+      "count": 932460
+    },
+    {
+      "_id": "funny",
+      "count": 930098
+    },
+    {
+      "_id": "leagueoflegends",
+      "count": 904297
+    },
+    {
+      "_id": "pics",
+      "count": 778942
+    }
+  ],
+  "ok": 1
+}
+```
 * znajdź ostatni wpis w kolekcji:
 ```sh
 > db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
@@ -183,7 +218,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 ```
 ##### Dodałam przykładowe zapytania:
 
-* znajdź pierwsze
+* wyświetl przykładowy pierwszy geojson:
 ```sh
 > db.stacje.findOne()
 {
