@@ -34,7 +34,7 @@ Policzyłam wszystkie jsony:
 
 ##### Dodałam przykładowe zapytania:
 
-* znajdź pierwszy:
+* znajdź pierwszy (wraz ze wszystkimi rekordami):
 ```sh
 > db.reddit.findOne()
 {
@@ -60,10 +60,72 @@ Policzyłam wszystkie jsony:
 	"controversiality" : 0,
 	"subreddit_id" : "t5_2r0gj",
 	"edited" : false
-}
-> 
+} 
 ```
-* znajdź ostatni:
+* wyświetlenie wpisów z liczbą polubień ponad 6000 ("ups") - największy wynik (tylko nazwa autora, komentarz, nazwa subreddita i liczba polubień komentarza):
+```sh
+> db.reddit.find({ups: { $gte: 6000}}, {_id:0, author:1, body:1, subreddit:1, ups:1})
+{
+  "body": "I can answer this one.  For some reason, I attract these people into my life.  [...]  Nobody has it all.  Nobody.",
+  "subreddit": "AskReddit",
+  "author": "a1988eli",
+  "ups": 6597
+}
+Fetched 3 record(s) in 646239ms
+```
+* wyświetlenie 5 autorów wpisów nagrodzonych "złotem" siedmio- i ośmiokrotnie (tylko nazwa autora i liczba nagrodzeń):
+```sh
+> db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
+{
+  "author": "Xarasystral",
+  "gilded": 7
+}
+{
+  "gilded": 8,
+  "author": "coughdropz"
+}
+{
+  "gilded": 7,
+  "author": "lalaland40000"
+}
+{
+  "author": "IMoustacheYou",
+  "gilded": 7
+}
+{
+  "author": "desmunda1",
+  "gilded": 7
+}
+Fetched 5 record(s) in 453257ms
+```
+* 
+```sh
+```
+* wyświetlenie 5 pierwszych wpisów autora "coughdropz" (tylko nazwa autora i komentarz):
+```sh
+> db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
+{
+  "body": "Expecting a big game from Nico Suave tonight!"
+}
+{
+  "body": "I got downvoted to hell for calling this guy a joke.  He's going to be demanding a starting position for the Bejing Ducks or some shit if he's not careful."
+}
+{
+  "body": "I backed it up!  Don't judge downvotes from a post you never read.  "
+}
+{
+  "body": "It has very little to do with his skill as an athlete and more to do with his negative basketball IQ, terrible shot selection, and HILARIOUSLY stupid comments to the media.  Get off your high horse, the guy who's shooting 28% from 3 while still jacking them up, talks shit about dread locks while sitting 10 feet from a teammate with dread locks, and gets WAIVED because he's such a fool the Pistons would rather pay him to play for someone else is a JOKE.  Not to mention he then demands a starting role instead of working to rehab his career.  Why do we have to play pretend for the sake of Josh Smith's feelings?  If you hurt your team, get waived, demand a starting role, and promptly shit the bed, you're a joke.\n\n"
+}
+{
+  "body": "He started it.  I have dread locks!"
+}
+Fetched 5 record(s) in 60668ms
+```
+Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
+
+![wyszukiwanie](img/obraz4.png)
+
+* znajdź ostatni wpis w kolekcji:
 ```sh
 > db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
 {
@@ -90,87 +152,7 @@ Policzyłam wszystkie jsony:
 	"archived" : false,
 	"score" : 3
 }
-> 
 ```
-* wyświetlenie wpisów z liczbą polubień ponad 6000 ("ups") - największy wynik:
-```sh
-db.reddit.find({ups: { $gte: 6000}})
-{
-  "_id": ObjectId("5658425432e70c909f1267a7"),
-  "parent_id": "t3_2s9u0s",
-  "body": "I can answer this one.  For some reason, I attract these people into my life. [...] Nobody has it all. Nobody.",
-  "controversiality": 0,
-  "author_flair_css_class": null,
-  "edited": 1421720564,
-  "author_flair_text": null,
-  "downs": 0,
-  "retrieved_on": 1424900621,
-  "name": "t1_cnnmca8",
-  "subreddit": "AskReddit",
-  "distinguished": null,
-  "archived": false,
-  "score": 6597,
-  "link_id": "t3_2s9u0s",
-  "score_hidden": false,
-  "subreddit_id": "t5_2qh1i",
-  "id": "cnnmca8",
-  "created_utc": "1421163921",
-  "gilded": 9,
-  "author": "a1988eli",
-  "ups": 6597
-}
-Fetched 3 record(s) in 646239ms
-```
-* wyświetlenie 5 autorów wpisów nagrodzonych "złotem" siedmio- i ośmiokrotnie:
-```sh
-db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
-db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
-{
-  "author": "Xarasystral",
-  "gilded": 7
-}
-{
-  "gilded": 8,
-  "author": "coughdropz"
-}
-{
-  "gilded": 7,
-  "author": "lalaland40000"
-}
-{
-  "author": "IMoustacheYou",
-  "gilded": 7
-}
-{
-  "author": "desmunda1",
-  "gilded": 7
-}
-Fetched 5 record(s) in 453257ms
-```
-* wyświetlenie 5 pierwszych wpisów autora "coughdropz":
-```sh
-db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
-{
-  "body": "Expecting a big game from Nico Suave tonight!"
-}
-{
-  "body": "I got downvoted to hell for calling this guy a joke.  He's going to be demanding a starting position for the Bejing Ducks or some shit if he's not careful."
-}
-{
-  "body": "I backed it up!  Don't judge downvotes from a post you never read.  "
-}
-{
-  "body": "It has very little to do with his skill as an athlete and more to do with his negative basketball IQ, terrible shot selection, and HILARIOUSLY stupid comments to the media.  Get off your high horse, the guy who's shooting 28% from 3 while still jacking them up, talks shit about dread locks while sitting 10 feet from a teammate with dread locks, and gets WAIVED because he's such a fool the Pistons would rather pay him to play for someone else is a JOKE.  Not to mention he then demands a starting role instead of working to rehab his career.  Why do we have to play pretend for the sake of Josh Smith's feelings?  If you hurt your team, get waived, demand a starting role, and promptly shit the bed, you're a joke.\n\n"
-}
-{
-  "body": "He started it.  I have dread locks!"
-}
-Fetched 5 record(s) in 60668ms
-```
-Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
-
-![wyszukiwanie](img/obraz4.png)
-
 ###Zadanie 1b Postgres (w przygotowaniu)
 
 ###Zadanie 2 GeoJSON
