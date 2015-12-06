@@ -98,10 +98,30 @@ Fetched 3 record(s) in 646239ms
 }
 Fetched 5 record(s) in 453257ms
 ```
-* zliczenie wszystkich wpisów w subreddicie "AskReddit":
+* wyświetlenie 5 subredditów na literę "m" z pominięciem 3 pierwszych:
 ```sh
-> db.reddit.find({subreddit: "AskReddit"}).count()
-4712795
+> db.reddit.find({subreddit: /^m/}, {_id:0, subreddit:1}).skip(3).limit(5)
+{
+  "subreddit": "mistyfront"
+}
+{
+  "subreddit": "marvelstudios"
+}
+{
+  "subreddit": "mercedes"
+}
+{
+  "subreddit": "milwaukee"
+}
+{
+  "subreddit": "magicTCG"
+}
+Fetched 5 record(s) in 3ms
+```
+* zliczenie wszystkich wpisów w subreddicie "marvelstudios":
+```sh
+> db.reddit.find({subreddit: "marvelstudios"}).count()
+27924
 ```
 * wyświetlenie 5 pierwszych wpisów autora "coughdropz" (tylko nazwa autora i komentarz):
 ```sh
@@ -127,7 +147,42 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 
 ![wyszukiwanie](img/obraz4.png)
 
-* wyświetlanie 5 najbardziej aktywnych subredditów:
+* wyświetlenie grupowania wyników większych i równych 3000 oraz mniejszych niż 3005:
+```sh
+> db.reddit.group({ 
+...   cond: {"score": {$gte: 3000, $lt:3005}},     
+...   key: {score: true} , initial: {body_count: 0 , total_body_len: 0},     
+...   reduce: function(doc, out) {out.body_count++; out.total_body_len += doc.body.length;},     
+...   finalize: function(out) { out.average_body_len  = out.total_body_len/ out.body_count;} 
+...   });
+[
+  {
+    "score": 3001,
+    "body_count": 5,
+    "total_body_len": 549,
+    "average_body_len": 109.8
+  },
+  {
+    "score": 3002,
+    "body_count": 5,
+    "total_body_len": 363,
+    "average_body_len": 72.6
+  },
+  {
+    "score": 3000,
+    "body_count": 2,
+    "total_body_len": 2366,
+    "average_body_len": 1183
+  },
+  {
+    "score": 3003,
+    "body_count": 3,
+    "total_body_len": 53,
+    "average_body_len": 17.666666666666668
+  }
+]
+```
+* wyświetlenie grupowania 5 najbardziej aktywnych subredditów:
 ```sh
 > db.reddit.aggregate([
 ...   {$group:{_id: "$subreddit", count:{$sum: 1}}},
