@@ -1,8 +1,9 @@
 ###Zadanie 1a MongoDB
 
-#####Import pliku RC_2015-01 do bazy MongoDB
+#####Import pliku bazy RC_2015-01 do bazy MongoDB
 
-Zaimportowałam plik korzystając z poniższej komendy:
+Pobrałam plik Reddit ze wszystkimi komentarzami ze stycznia 2015 wielkości 5.5 GB.
+Zaimportowałam go do bazy MongoDB korzystając z poniższej komendy:
 ```sh
 time bunzip2 -c RC_2015-01.bz2 | mongoimport --drop --host 127.0.0.1 -d test -c reddit
 ```
@@ -243,7 +244,25 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 	"score" : 3
 }
 ```
-###Zadanie 1b Postgres (w przygotowaniu)
+###Zadanie 1b Postgres
+
+#####Import pliku RC_2015-01 do bazy Postgres
+
+Zaimportowałam plik korzystając z poniższej komendy:
+```sh
+time ./pgfutter --db postgres --user postgres --pw 123456 json RC_2015-01
+```
+![import](img/obraz5.png)
+
+Historia Procesora:
+
+![procesor](img/obraz6.png)
+
+Procesory były obciążone równomiernie od 5 do 60 procent. Pamięć była wykorzystywana od 43 do 45 procent.
+
+Policzyłam wszystkie jsony:
+
+![json](img/obraz7.png)
 
 ###Zadanie 2 GeoJSON
 
