@@ -264,17 +264,18 @@ Policzyłam wszystkie jsony:
 
 ![json](img/obraz7.png)
 
-|Baza danych 		| MonboDB 	| Postgres 	|
+|Baza danych 		| MongoDB 	| Postgres 	|
 |-----------------------|---------------|---------------|
 |Wersja			|3.0.7		|9.4.5		|
-|Czas importu		|		|		|
-|Czas zliczenia rekordów|		|		|
+|Czas importu		|1h49m56s	|1h32m22s	|
+|Czas zliczenia rekordów|1s		|11m30s		|
 
 ###Zadanie 2 GeoJSON
 
 #####Import pliku orlen.json do bazy MongoDB
 
-Zaimportowałam plik orlen.json korzystając z poniższej komendy:
+Pobrałam plik bazy danych lokalizacji stacji benzynowych Orlen w Polsce orlen.json.
+Zaimportowałam go do bazy MongoDB korzystając z poniższej komendy:
 ```sh
 time mongoimport -d orlen -c stacje < orlen.json
 ```
