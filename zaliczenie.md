@@ -284,6 +284,22 @@ postgres=# SELECT data->>'subreddit' AS subreddit FROM import.rc_2015_01 WHERE d
  gamecollecting
 (3 wiersze)
 ```
+* wyświetlenie 5 autorów oraz ich komentarzy z polubieniami pomiędzy 1000 i 2000 (z pominięciem pierwszych 10).
+```sh
+SELECT data->>'author'AS autor, data->>'body' AS tresc FROM import.rc_2015_01 WHERE data->>'ups' between '1000' AND '2000' LIMIT 5 OFFSET 10;
+     author     |                                                                         tresc                                                                         
+----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ lifelooksbleak | How do you find them so quickly? I can usually only find something that half explains my point. 
+ iDuLicious     | This is actually incredible. Really happy for the Smash community, as the competitiveness for the game has really blown up since EVO.
+ Supercedings   | Yeah. Instead of asking the biggest rapper out today for a hook, a verse, or a co-sign, they're roasting him VIA group chat... Sounds plausible, god.
+ fournipsnohips | I love Arcanine for Zayn and Jolteon for Louis!                                                                                                      +
+                |                                                                                                                                                      +
+                | Edit: oops I guess Jolteon is for Niall 
+ RossAlmighty   | based on the link title, came here expecting warhammer related goodness (before i noticed the sub).                                                  +
+                |                                                                                                                                                      +
+                | was not disappointed. 
+(5 wierszy)
+```
 
 |Baza danych 		| MongoDB 	| Postgres 	|
 |-----------------------|---------------|---------------|
