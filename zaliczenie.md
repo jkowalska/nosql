@@ -274,11 +274,22 @@ postgres=# select * from import.rc_2015_01 LIMIT 1;
  
 (1 wiersz)
 ```
+* wyświetlenie 3 subredditów na literę "g".
+```sh
+postgres=# SELECT data->>'subreddit' AS subreddit FROM import.rc_2015_01 WHERE data->>'subreddit' like ('g%') LIMIT 3;
+   subreddit    
+----------------
+ gaming
+ gardening
+ gamecollecting
+(3 wiersze)
+```
+
 |Baza danych 		| MongoDB 	| Postgres 	|
 |-----------------------|---------------|---------------|
 |Wersja			|3.0.7		|9.4.5		|
 |Czas importu		|1h49m56s	|1h32m22s	|
-|Czas zliczenia rekordów|1s		|11m30s		|
+|Czas zliczenia rekordów|<1s		|11m30s		|
 
 ###Zadanie 2 GeoJSON
 
