@@ -264,6 +264,10 @@ Policzyłam wszystkie jsony:
 
 ![json](img/obraz7.png)
 
+Historia Procesora podczas liczenia:
+
+![json](img/obraz8.png)
+
 ##### Dodałam przykładowe zapytania:
 
 * znajdź pierwszy:
