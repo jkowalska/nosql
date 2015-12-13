@@ -13,7 +13,7 @@ Historia Procesora:
 
 ![procesor](img/obraz2.png)
 
-Procesory były obciążone równomiernie od 25 do 95 procent. Widać, że w trakcie importu rdzenie przegrzewają się i wyłączają co kilka sekund, po czym inne rdzenie przejmują. Pamięć była wykorzystywana od 28 do 31 procent. 
+Procesory były obciążone równomiernie od 25 do 95 procent. Widać, że w trakcie importu kolejne rdzenie przegrzewają się i wyłączają co kilka sekund, a inne rdzenie przejmują pracę. Pamięć była wykorzystywana od 28 do 31 procent. 
 
 Połączyłam się z mongo, przeszłam do bazy testy i wybrałam kolekcję reddit:
 ```sh
