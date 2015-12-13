@@ -275,7 +275,7 @@ SELECT data->>'author'AS autor, data->>'body' AS tresc FROM import.rc_2015_01 WH
 |-----------------------------------------------|-----------------------|---------------------------------------|
 |Wersja						|3.0.7			|9.4.5					|
 |Czas importu					|1h49m56s		|1h32m22s				|
-|Czas zliczenia rekordów			|<1s			|11m30s					|
+|Czas zliczenia rekordów			|<1s			|22m30s					|
 |Obciążenie procesora w trakcie importu		|większe (25-95%)	|mniejsze (5-60%)			|
 |Import bazy danych				|jedna komenda		|przy użyciu programu pgfutter		|
 |Łatwość wyszukiwania jsonów			|+ (osobne rekordy)	|- (wszystkie rekordy w jednej linijce)	|
