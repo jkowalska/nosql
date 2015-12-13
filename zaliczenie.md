@@ -13,7 +13,7 @@ Historia Procesora:
 
 ![procesor](img/obraz2.png)
 
-Procesory były obciążone równomiernie od 25 do 95 procent. Pamięć była wykorzystywana od 28 do 31 procent.
+Procesory były obciążone równomiernie od 25 do 95 procent. Widać, że w trakcie importu rdzenie przegrzewają się i wyłączają co kilka sekund, po czym inne rdzenie przejmują. Pamięć była wykorzystywana od 28 do 31 procent. 
 
 Połączyłam się z mongo, przeszłam do bazy testy i wybrałam kolekcję reddit:
 ```sh
@@ -305,11 +305,14 @@ SELECT data->>'author'AS autor, data->>'body' AS tresc FROM import.rc_2015_01 WH
 (5 wierszy)
 ```
 
-|Baza danych 		| MongoDB 	| Postgres 	|
-|-----------------------|---------------|---------------|
-|Wersja			|3.0.7		|9.4.5		|
-|Czas importu		|1h49m56s	|1h32m22s	|
-|Czas zliczenia rekordów|<1s		|11m30s		|
+|Baza danych 					| MongoDB 		| Postgres 				|
+|-----------------------------------------------|-----------------------|---------------------------------------|
+|Wersja						|3.0.7			|9.4.5					|
+|Czas importu					|1h49m56s		|1h32m22s				|
+|Czas zliczenia rekordów			|<1s			|11m30s					|
+|Obciążenie procesora w trakcie importu		|większe (25-95%)	|mniejsze (5-60%)			|
+|Import bazy danych				|jedna komenda		|przy użyciu programu pgfutter		|
+|Łatwość wyszukiwania jsonów			|+ (osobne rekordy)	|- (wszystkie rekordy w jednej linijce)	|
 
 ###Zadanie 2 GeoJSON
 
