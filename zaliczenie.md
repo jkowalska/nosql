@@ -258,7 +258,7 @@ Historia Procesora:
 
 ![procesor](img/obraz6.png)
 
-Procesory były obciążone równomiernie od 5 do 60 procent. Pamięć była wykorzystywana od 43 do 45 procent.
+Procesory były obciążone równomiernie od 5 do 60 procent. Pamięć była wykorzystywana od 31 do 35 procent.
 
 Policzyłam wszystkie jsony:
 
@@ -304,8 +304,9 @@ SELECT data->>'author'AS autor, data->>'body' AS tresc FROM import.rc_2015_01 WH
                 | was not disappointed. 
 (5 wierszy)
 ```
+##### Porównanie działania MongoDB i PostgreSQL:
 
-|Baza danych 					| MongoDB 		| Postgres 				|
+|Baza danych 					| MongoDB 		| PostgreSQL 				|
 |-----------------------------------------------|-----------------------|---------------------------------------|
 |Wersja						|3.0.7			|9.4.5					|
 |Czas importu					|1h49m56s		|1h32m22s				|
