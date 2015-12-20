@@ -284,8 +284,7 @@ SELECT data->>'author'AS autor, data->>'body' AS tresc FROM import.rc_2015_01 WH
 
 #####Import pliku orlen.json do bazy MongoDB
 
-Pobrałam plik bazy danych lokalizacji stacji benzynowych Orlen w Polsce orlen.json.
-Zaimportowałam go do bazy MongoDB korzystając z poniższej komendy:
+Pobrałam plik bazy danych lokalizacji stacji benzynowych Orlen w Polsce orlen.json. Lokalna kopia bazy: [orlen.json](www.github.com/jkowalska/nosql/blob/master/img/orlen.json). Zaimportowałam plik do bazy MongoDB korzystając z poniższej komendy:
 ```sh
 time mongoimport -d orlen -c stacje < orlen.json
 ```
