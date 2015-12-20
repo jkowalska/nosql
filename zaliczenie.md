@@ -1,14 +1,42 @@
 ###Zadanie 1a MongoDB
 
-#####Import pliku bazy danych Reddit RC_2015-01 do bazy MongoDB
+#####Import pliku bazy danych Reddit RC_2015-01 do bazy MongoDB wersja 3.0.7
 
-Pobrałam plik bazy Reddit ze wszystkimi komentarzami ze stycznia 2015 wielkości 5.5 GB.
-Zaimportowałam go do bazy MongoDB korzystając z poniższej komendy:
+Pobrałam plik bazy **Reddit** ze wszystkimi komentarzami ze stycznia 2015 wielkości 5.5 GB ze strony [archive.org](www.archive.org/download/2015_reddit_comments_corpus/reddit_data/2015/).
+Zaimportowałam go do bazy MongoDB (skompresowany) korzystając z poniższej komendy:
 ```sh
 time bunzip2 -c RC_2015-01.bz2 | mongoimport --drop --host 127.0.0.1 -d test -c reddit
 ```
 ![import](img/obraz1.png)
 
+* pierwszy przykładowy json z kolekcji (wraz ze wszystkimi rekordami):
+```sh
+db.reddit.findOne()
+{
+	"_id" : ObjectId("5657848cc40dd605ebeb4d7d"),
+	"score_hidden" : false,
+	"name" : "t1_cnas8zv",
+	"link_id" : "t3_2qyr1a",
+	"body" : "Most of us have some family members like this. *Most* of my family is like this. ",
+	"downs" : 0,
+	"created_utc" : "1420070400",
+	"score" : 14,
+	"author" : "YoungModern",
+	"distinguished" : null,
+	"id" : "cnas8zv",
+	"archived" : false,
+	"parent_id" : "t3_2qyr1a",
+	"subreddit" : "exmormon",
+	"author_flair_css_class" : null,
+	"author_flair_text" : null,
+	"gilded" : 0,
+	"retrieved_on" : 1425124282,
+	"ups" : 14,
+	"controversiality" : 0,
+	"subreddit_id" : "t5_2r0gj",
+	"edited" : false
+} 
+```
 Historia Procesora:
 
 ![procesor](img/obraz2.png)
@@ -35,37 +63,9 @@ Policzyłam wszystkie jsony:
 
 ##### Dodałam przykładowe zapytania:
 
-* znajdź pierwszy (wraz ze wszystkimi rekordami):
-```sh
-> db.reddit.findOne()
-{
-	"_id" : ObjectId("5657848cc40dd605ebeb4d7d"),
-	"score_hidden" : false,
-	"name" : "t1_cnas8zv",
-	"link_id" : "t3_2qyr1a",
-	"body" : "Most of us have some family members like this. *Most* of my family is like this. ",
-	"downs" : 0,
-	"created_utc" : "1420070400",
-	"score" : 14,
-	"author" : "YoungModern",
-	"distinguished" : null,
-	"id" : "cnas8zv",
-	"archived" : false,
-	"parent_id" : "t3_2qyr1a",
-	"subreddit" : "exmormon",
-	"author_flair_css_class" : null,
-	"author_flair_text" : null,
-	"gilded" : 0,
-	"retrieved_on" : 1425124282,
-	"ups" : 14,
-	"controversiality" : 0,
-	"subreddit_id" : "t5_2r0gj",
-	"edited" : false
-} 
-```
 * wyświetlenie wpisów z liczbą polubień ponad 6000 ("ups") - największy wynik (tylko nazwa autora, komentarz, nazwa subreddita i liczba polubień komentarza):
 ```sh
-> db.reddit.find({ups: { $gte: 6000}}, {_id:0, author:1, body:1, subreddit:1, ups:1})
+db.reddit.find({ups: { $gte: 6000}}, {_id:0, author:1, body:1, subreddit:1, ups:1})
 {
   "body": "I can answer this one.  For some reason, I attract these people into my life.  [...]  Nobody has it all.  Nobody.",
   "subreddit": "AskReddit",
@@ -76,7 +76,7 @@ Fetched 3 record(s) in 646239ms
 ```
 * wyświetlenie 5 autorów wpisów nagrodzonych "złotem" siedmio- i ośmiokrotnie (tylko nazwa autora i liczba nagrodzeń):
 ```sh
-> db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
+db.reddit.find({gilded : {$in: [7, 8]}},{_id:0, author:1, gilded:1}).limit(5)
 {
   "author": "Xarasystral",
   "gilded": 7
@@ -99,34 +99,9 @@ Fetched 3 record(s) in 646239ms
 }
 Fetched 5 record(s) in 453257ms
 ```
-* wyświetlenie 5 subredditów na literę "m" z pominięciem 3 pierwszych:
+* wyświetlenie 5 pierwszych wpisów nagrodzonego ośmiokrotnie złotem autora "coughdropz" (tylko nazwa autora i komentarz):
 ```sh
-> db.reddit.find({subreddit: /^m/}, {_id:0, subreddit:1}).skip(3).limit(5)
-{
-  "subreddit": "mistyfront"
-}
-{
-  "subreddit": "marvelstudios"
-}
-{
-  "subreddit": "mercedes"
-}
-{
-  "subreddit": "milwaukee"
-}
-{
-  "subreddit": "magicTCG"
-}
-Fetched 5 record(s) in 3ms
-```
-* zliczenie wszystkich wpisów w subreddicie "marvelstudios":
-```sh
-> db.reddit.find({subreddit: "marvelstudios"}).count()
-27924
-```
-* wyświetlenie 5 pierwszych wpisów autora "coughdropz" (tylko nazwa autora i komentarz):
-```sh
-> db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
+db.reddit.find({author: "coughdropz"}, {_id:0, author:1, body:1}).limit(5)
 {
   "body": "Expecting a big game from Nico Suave tonight!"
 }
@@ -148,13 +123,38 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 
 ![wyszukiwanie](img/obraz4.png)
 
+* wyświetlenie 5 subredditów na literę "m" z pominięciem 3 pierwszych:
+```sh
+db.reddit.find({subreddit: /^m/}, {_id:0, subreddit:1}).skip(3).limit(5)
+{
+  "subreddit": "mistyfront"
+}
+{
+  "subreddit": "marvelstudios"
+}
+{
+  "subreddit": "mercedes"
+}
+{
+  "subreddit": "milwaukee"
+}
+{
+  "subreddit": "magicTCG"
+}
+Fetched 5 record(s) in 3ms
+```
+* zliczenie wszystkich wpisów w subreddicie "marvelstudios":
+```sh
+db.reddit.find({subreddit: "marvelstudios"}).count()
+27924
+```
 * wyświetlenie grupowania 5 najbardziej aktywnych subredditów:
 ```sh
-> db.reddit.aggregate([
-...   {$group:{_id: "$subreddit", count:{$sum: 1}}},
-...   {$sort:{count: -1}},
-...   {$limit: 5}
-...   ]);
+db.reddit.aggregate([ 
+{$group:{_id: "$subreddit", count:{$sum: 1}}},
+{$sort:{count: -1}},
+{$limit: 5}
+]);
 {
   "result": [
     {
@@ -183,7 +183,7 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 ```
 * znajdź ostatni wpis w kolekcji:
 ```sh
-> db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
+db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
 {
 	"_id" : ObjectId("56579d9ec40dd605eb210312"),
 	"author_flair_text" : "RRRAURGH!",
@@ -211,9 +211,9 @@ Historia procesora podczas wyszukiwania wpisów autora "coughdropz":
 ```
 ###Zadanie 1b Postgres
 
-#####Import pliku bazy danych Reddit RC_2015-01 do bazy Postgres
+#####Import pliku bazy danych Reddit RC_2015-01 do bazy Postgres wersja 9.4.5
 
-Zaimportowałam plik korzystając z poniższej komendy:
+Do zaimportowania rozpakowanego pliku RC_2015-01 użyłam programu pgfutter pobranego z tej strony [github.com/lukasmartinelli](https://github.com/lukasmartinelli/pgfutter). Zaimportowałam plik korzystając z poniższej komendy:
 ```sh
 time ./pgfutter --db postgres --user postgres --pw 123456 json RC_2015-01
 ```
@@ -276,8 +276,8 @@ SELECT data->>'author'AS autor, data->>'body' AS tresc FROM import.rc_2015_01 WH
 |Wersja						|3.0.7			|9.4.5					|
 |Czas importu					|1h49m56s		|1h32m22s				|
 |Czas zliczenia rekordów			|<1s			|22m30s					|
-|Obciążenie procesora w trakcie importu		|większe (25-95%)	|mniejsze (5-60%)			|
 |Import bazy danych				|jedna komenda		|przy użyciu programu pgfutter		|
+|Obciążenie procesora w trakcie importu		|mongoimport: większe (25-95%)	|pgfutter: mniejsze (5-60%)	|
 |Łatwość wyszukiwania jsonów			|+ (osobne rekordy)	|- (wszystkie rekordy w jednej linijce)	|
 
 ###Zadanie 2 GeoJSON
@@ -297,21 +297,9 @@ real	0m0.572s
 user	0m0.088s
 sys	0m0.088s
 ```
-Dodałam geoindeks do kolekcji stacje:
+* przykładowy pierwszy geojson:
 ```sh
-db.stacje.ensureIndex({loc : "2dsphere"})
-{
-	"createdCollectionAutomatically" : false,
-	"numIndexesBefore" : 1,
-	"numIndexesAfter" : 2,
-	"ok" : 1
-}
-```
-##### Dodałam przykładowe zapytania:
-
-* wyświetl przykładowy pierwszy geojson:
-```sh
-> db.stacje.findOne()
+db.stacje.findOne()
 {
 	"_id" : ObjectId("56587fb9d3d1ab580a563180"),
 	"loc" : {
@@ -327,9 +315,23 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 ```
 [Geojson "Point"](img/test1.geojson "Point")
 
+Dodałam geoindeks do kolekcji stacje:
+```sh
+db.stacje.ensureIndex({loc : "2dsphere"})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+```
+##### Dodałam przykładowe zapytania:
+
+Do opracowania zapytań skorzystałam ze strony [geojson.io](www.geojson.io/#map=2/20.1/-0.2).
+
 * znajdź stacje Orlen oddalone od Władysławowa o maksymalnie o 25km:
 ```sh
-> db.stacje.find({loc: {$near: {$geometry: {type: "Point", coordinates: [18.405400,54.775920]}, $maxDistance: 25000}}}).skip(1)
+db.stacje.find({loc: {$near: {$geometry: {type: "Point", coordinates: [18.405400,54.775920]}, $maxDistance: 25000}}}).skip(1)
 { "_id" : ObjectId("56587fbad3d1ab580a56352d"), "loc" : { "type" : "Point", "coordinates" : [ 18.40589, 54.71592 ] }, "name" : "Stacje paliw Orlen", "city" : "Puck" }
 { "_id" : ObjectId("56587fbad3d1ab580a5634a4"), "loc" : { "type" : "Point", "coordinates" : [ 18.1183, 54.78674 ] }, "name" : "Stacje paliw Orlen", "city" : "Odargowo" }
 { "_id" : ObjectId("56587fbad3d1ab580a563614"), "loc" : { "type" : "Point", "coordinates" : [ 18.27235, 54.60235 ] }, "name" : "Stacje paliw Orlen", "city" : "Wejherowo" }
@@ -341,7 +343,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 
 * znajdź stacje w Pucku i najbliższych 3 miastach:
 ```sh
-> db.stacje.find({loc: {$near: {$geometry: {type: "Point", coordinates: [18.405890,54.715920]}}}}).limit(3)
+db.stacje.find({loc: {$near: {$geometry: {type: "Point", coordinates: [18.405890,54.715920]}}}}).limit(3)
 { "_id" : ObjectId("56587fbad3d1ab580a56352d"), "loc" : { "type" : "Point", "coordinates" : [ 18.40589, 54.71592 ] }, "name" : "Stacje paliw Orlen", "city" : "Puck" }
 { "_id" : ObjectId("56587fbad3d1ab580a563490"), "loc" : { "type" : "Point", "coordinates" : [ 18.4054, 54.77592 ] }, "name" : "Stacje paliw Orlen", "city" : "Władysławowo" }
 { "_id" : ObjectId("56587fbad3d1ab580a563614"), "loc" : { "type" : "Point", "coordinates" : [ 18.27235, 54.60235 ] }, "name" : "Stacje paliw Orlen", "city" : "Wejherowo" }
@@ -350,7 +352,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 
 * znajdź stacje na linii Gdańsk - Lębork:
 ```sh
-> db.stacje.find({loc: {$geoIntersects: {$geometry: {type: "LineString", coordinates: [ [18.477135,54.380675], [17.797210,54.551720]]}}}})
+db.stacje.find({loc: {$geoIntersects: {$geometry: {type: "LineString", coordinates: [ [18.477135,54.380675], [17.797210,54.551720]]}}}})
 { "_id" : ObjectId("56587fbad3d1ab580a56329a"), "loc" : { "type" : "Point", "coordinates" : [ 18.477135, 54.380675 ] }, "name" : "Stacje paliw Orlen", "city" : "Gdańsk" }
 { "_id" : ObjectId("56587fbad3d1ab580a5633fe"), "loc" : { "type" : "Point", "coordinates" : [ 17.79721, 54.55172 ] }, "name" : "Stacje paliw Orlen", "city" : "Lębork" }
 ```
@@ -358,7 +360,7 @@ db.stacje.ensureIndex({loc : "2dsphere"})
 
 * znajdź stacje w Słupsku i okolicach:
 ```sh
-> db.stacje.find({loc: {$geoWithin: {$geometry: {type: "Polygon", coordinates: [[
+db.stacje.find({loc: {$geoWithin: {$geometry: {type: "Polygon", coordinates: [[
 	    [
               16.93817138671875,
               54.410938637023676
