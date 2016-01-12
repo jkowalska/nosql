@@ -71,8 +71,7 @@ db.restaurants.find({"name": /^Bis/}, {_id: 0, name: 1, rating: 1, type_of_food:
   "type_of_food": "Chicken"
 }
 Fetched 5 record(s) in 8ms
-```sh
-
+```
 * wyświetlenie rodzajów serwowanego jedzenia w restauracjach (posortowane):
 ```sh
 db.restaurants.distinct("type_of_food").sort()
@@ -155,4 +154,163 @@ db.restaurants.find({type_of_food: "Vietnamese"},{_id: 0})
   "type_of_food": "Vietnamese"
 }
 Fetched 2 record(s) in 6ms
+```
+###Agregacje:
+
+* wyświetlenie sum oceny typów jedzenia dla oceny >= 50 i < 100 (posortowane od największej do najmniejszej sumy ocen):
+```sh
+db.restaurants.aggregate([
+  { $group: {_id: "$type_of_food", totalRating: {$sum: "$rating"}} },
+  { $match: {totalRating: {$gte: 50, $lt: 100}} },
+  { $sort: {totalRating: -1 } }
+])
+{
+  "result": [
+    {
+      "_id": "Bangladeshi",
+      "totalRating": 95.5
+    },
+    {
+      "_id": "Peri Peri",
+      "totalRating": 92.5
+    },
+    {
+      "_id": "African",
+      "totalRating": 91
+    },
+    {
+      "_id": "Japanese",
+      "totalRating": 82
+    },
+    {
+      "_id": "Afghan",
+      "totalRating": 74.5
+    },
+    {
+      "_id": "Persian",
+      "totalRating": 73.5
+    },
+    {
+      "_id": "Middle Eastern",
+      "totalRating": 63.5
+    },
+    {
+      "_id": "Mediterranean",
+      "totalRating": 62
+    },
+    {
+      "_id": "Grill",
+      "totalRating": 58.5
+    },
+    {
+      "_id": "Mexican",
+      "totalRating": 52.5
+    }
+  ],
+  "ok": 1
+}
+```
+* wyświetlenie 10 typów jedzenia występujących najczęściej:
+```sh
+db.restaurants.aggregate([
+  {"$group" : {"_id" : "$type_of_food", "count" : {"$sum" : 1}}},
+  {"$sort" : {"count" : -1}},
+  {"$limit" : 10}])
+{
+  "result": [
+    {
+      "_id": "Curry",
+      "count": 902
+    },
+    {
+      "_id": "Pizza",
+      "count": 500
+    },
+    {
+      "_id": "Chinese",
+      "count": 174
+    },
+    {
+      "_id": "Kebab",
+      "count": 154
+    },
+    {
+      "_id": "Fish & Chips",
+      "count": 116
+    },
+    {
+      "_id": "American",
+      "count": 95
+    },
+    {
+      "_id": "Turkish",
+      "count": 74
+    },
+    {
+      "_id": "Lebanese",
+      "count": 70
+    },
+    {
+      "_id": "Chicken",
+      "count": 53
+    },
+    {
+      "_id": "Caribbean",
+      "count": 46
+    }
+  ],
+  "ok": 1
+}
+```
+* wyświetlenie 10 typów jedzenia występujących najrzadziej:
+```sh
+db.restaurants.aggregate([
+  {"$group" : {"_id" : "$type_of_food", "count" : {"$sum" : 1}}},
+  {"$sort" : {"count" : 1}},
+  {"$limit" : 10}])
+{
+  "result": [
+    {
+      "_id": "Pasta",
+      "count": 1
+    },
+    {
+      "_id": "Cakes",
+      "count": 1
+    },
+    {
+      "_id": "Punjabi",
+      "count": 1
+    },
+    {
+      "_id": "Spanish",
+      "count": 1
+    },
+    {
+      "_id": "Nigerian",
+      "count": 1
+    },
+    {
+      "_id": "Pick n Mix",
+      "count": 2
+    },
+    {
+      "_id": "Vietnamese",
+      "count": 2
+    },
+    {
+      "_id": "Portuguese",
+      "count": 2
+    },
+    {
+      "_id": "Russian",
+      "count": 2
+    },
+    {
+      "_id": "Vegetarian",
+      "count": 2
+    }
+  ],
+  "ok": 1
+}
 ```
