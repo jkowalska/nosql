@@ -1,6 +1,6 @@
-#####Import pliku bazy danych restaurants.json do bazy MongoDB wersja 3.0.8
+###Import pliku bazy danych restaurants.json do bazy MongoDB wersja 3.0.8
 
-Pobrałam plik bazy **Restaurants** z brytyjskimi restauracjami wielkości 684,2 kB. ze strony [restaurants.json](https://dl.dropboxusercontent.com/u/15056258/mongodb/restaurant.json).
+Pobrałam plik bazy **Restaurants** z brytyjskimi restauracjami wielkości 684,2 kB ze strony [restaurants.json](https://dl.dropboxusercontent.com/u/15056258/mongodb/restaurant.json).
 
 Zaimportowałam go do bazy MongoDB korzystając z poniższej komendy:
 ```sh
@@ -157,7 +157,7 @@ Fetched 2 record(s) in 6ms
 ```
 ###Agregacje:
 
-* wyświetlenie sum oceny typów jedzenia dla oceny >= 50 i < 100 (posortowane od największej do najmniejszej sumy ocen):
+* wyświetlenie sum oceny typów jedzenia dla sumy >= 50 i < 100 (posortowane od największej do najmniejszej sumy ocen):
 ```sh
 db.restaurants.aggregate([
   { $group: {_id: "$type_of_food", totalRating: {$sum: "$rating"}} },
