@@ -12,7 +12,7 @@ connected to: 127.0.0.1
 
 real	0m0.619s
 user	0m0.158s
-sys   0m0.014s
+sys     0m0.014s
 ```
 * przykładowy json z kolekcji (ostatni) wraz ze wszystkimi rekordami: id, url, adresem, nazwą, kodami pocztowymi, oceną i typem jedzenia:
 ```sh
@@ -72,7 +72,7 @@ db.restaurants.find({"name": /^Bis/}, {_id: 0, name: 1, rating: 1, type_of_food:
 }
 Fetched 5 record(s) in 8ms
 ```
-* wyświetlenie rodzajów serwowanego jedzenia w restauracjach (posortowane):
+* wyświetlenie rodzajów podawanego jedzenia w restauracjach (posortowane):
 ```sh
 db.restaurants.distinct("type_of_food").sort()
 [
@@ -205,6 +205,226 @@ db.restaurants.aggregate([
     {
       "_id": "Mexican",
       "totalRating": 52.5
+    }
+  ],
+  "ok": 1
+}
+```
+* wyświetlenie średnich ocen dla wszystkich typów jedzenia posortowane według średniej oceny jedzenia:
+```sh
+db.restaurants.aggregate([
+  { $group: {_id: "$type_of_food", avgRating: {$avg: "$rating"}} },
+  { $sort: {avgRating: -1 } }
+])
+{
+  "result": [
+    {
+      "_id": "Pasta",
+      "avgRating": 6
+    },
+    {
+      "_id": "Punjabi",
+      "avgRating": 6
+    },
+    {
+      "_id": "Bagels",
+      "avgRating": 5.5
+    },
+    {
+      "_id": "Ice Cream",
+      "avgRating": 5.5
+    },
+    {
+      "_id": "Pick n Mix",
+      "avgRating": 5.5
+    },
+    {
+      "_id": "Cakes",
+      "avgRating": 5.5
+    },
+    {
+      "_id": "Bangladeshi",
+      "avgRating": 5.305555555555555
+    },
+    {
+      "_id": "Persian",
+      "avgRating": 5.25
+    },
+    {
+      "_id": "Polish",
+      "avgRating": 5.166666666666667
+    },
+    {
+      "_id": "Mediterranean",
+      "avgRating": 5.166666666666667
+    },
+    {
+      "_id": "Greek",
+      "avgRating": 5.142857142857143
+    },
+    {
+      "_id": "Sushi",
+      "avgRating": 5.125
+    },
+    {
+      "_id": "Fish & Chips",
+      "avgRating": 5.036697247706422
+    },
+    {
+      "_id": "Curry",
+      "avgRating": 5.0361581920903955
+    },
+    {
+      "_id": "Azerbaijan",
+      "avgRating": 5
+    },
+    {
+      "_id": "Ethiopian",
+      "avgRating": 5
+    },
+    {
+      "_id": "Korean",
+      "avgRating": 5
+    },
+    {
+      "_id": "Portuguese",
+      "avgRating": 5
+    },
+    {
+      "_id": "Breakfast",
+      "avgRating": 5
+    },
+    {
+      "_id": "Afghan",
+      "avgRating": 4.966666666666667
+    },
+    {
+      "_id": "Burgers",
+      "avgRating": 4.954545454545454
+    },
+    {
+      "_id": "Turkish",
+      "avgRating": 4.918918918918919
+    },
+    {
+      "_id": "Pizza",
+      "avgRating": 4.914141414141414
+    },
+    {
+      "_id": "Chinese",
+      "avgRating": 4.89367816091954
+    },
+    {
+      "_id": "Kebab",
+      "avgRating": 4.88562091503268
+    },
+    {
+      "_id": "Grill",
+      "avgRating": 4.875
+    },
+    {
+      "_id": "Peri Peri",
+      "avgRating": 4.868421052631579
+    },
+    {
+      "_id": "South Curry",
+      "avgRating": 4.833333333333333
+    },
+    {
+      "_id": "Japanese",
+      "avgRating": 4.823529411764706
+    },
+    {
+      "_id": "Lebanese",
+      "avgRating": 4.8059701492537314
+    },
+    {
+      "_id": "Milkshakes",
+      "avgRating": 4.8
+    },
+    {
+      "_id": "Mexican",
+      "avgRating": 4.7727272727272725
+    },
+    {
+      "_id": "Sri-lankan",
+      "avgRating": 4.7
+    },
+    {
+      "_id": "Moroccan",
+      "avgRating": 4.666666666666667
+    },
+    {
+      "_id": "Sandwiches",
+      "avgRating": 4.666666666666667
+    },
+    {
+      "_id": "Thai",
+      "avgRating": 4.65
+    },
+    {
+      "_id": "American",
+      "avgRating": 4.617021276595745
+    },
+    {
+      "_id": "Caribbean",
+      "avgRating": 4.583333333333333
+    },
+    {
+      "_id": "Middle Eastern",
+      "avgRating": 4.535714285714286
+    },
+    {
+      "_id": "Nigerian",
+      "avgRating": 4.5
+    },
+    {
+      "_id": "Russian",
+      "avgRating": 4.5
+    },
+    {
+      "_id": "Spanish",
+      "avgRating": 4.5
+    },
+    {
+      "_id": "Arabic",
+      "avgRating": 4.5
+    },
+    {
+      "_id": "English",
+      "avgRating": 4.5
+    },
+    {
+      "_id": "Chicken",
+      "avgRating": 4.41
+    },
+    {
+      "_id": "Desserts",
+      "avgRating": 4.375
+    },
+    {
+      "_id": "Pakistani",
+      "avgRating": 4.357142857142857
+    },
+    {
+      "_id": "Healthy",
+      "avgRating": 4.166666666666667
+    },
+    {
+      "_id": "Vietnamese",
+      "avgRating": 4
+    },
+    {
+      "_id": "Vegetarian",
+      "avgRating": 4
+    },
+    {
+      "_id": "African",
+      "avgRating": 3.64
+    },
+    {
+      "_id": "*NEW*",
+      "avgRating": 0
     }
   ],
   "ok": 1
