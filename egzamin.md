@@ -72,64 +72,6 @@ db.restaurants.find({"name": /^Bis/}, {_id: 0, name: 1, rating: 1, type_of_food:
 }
 Fetched 5 record(s) in 8ms
 ```
-* wyświetlenie rodzajów podawanego jedzenia w restauracjach (posortowane):
-```sh
-db.restaurants.distinct("type_of_food").sort()
-[
-  "*NEW*",
-  "Afghan",
-  "African",
-  "American",
-  "Arabic",
-  "Azerbaijan",
-  "Bagels",
-  "Bangladeshi",
-  "Breakfast",
-  "Burgers",
-  "Cakes",
-  "Caribbean",
-  "Chicken",
-  "Chinese",
-  "Curry",
-  "Desserts",
-  "English",
-  "Ethiopian",
-  "Fish & Chips",
-  "Greek",
-  "Grill",
-  "Healthy",
-  "Ice Cream",
-  "Japanese",
-  "Kebab",
-  "Korean",
-  "Lebanese",
-  "Mediterranean",
-  "Mexican",
-  "Middle Eastern",
-  "Milkshakes",
-  "Moroccan",
-  "Nigerian",
-  "Pakistani",
-  "Pasta",
-  "Peri Peri",
-  "Persian",
-  "Pick n Mix",
-  "Pizza",
-  "Polish",
-  "Portuguese",
-  "Punjabi",
-  "Russian",
-  "Sandwiches",
-  "South Curry",
-  "Spanish",
-  "Sri-lankan",
-  "Sushi",
-  "Thai",
-  "Turkish",
-  "Vegetarian",
-  "Vietnamese"
-]
-```
 * wyświetlenie restauracji podających wietnamskie jedzenie:
 ```sh
 db.restaurants.find({type_of_food: "Vietnamese"},{_id: 0})
@@ -157,7 +99,11 @@ Fetched 2 record(s) in 6ms
 ```
 ###Agregacje:
 
-* wyświetlenie sum oceny typów jedzenia dla sumy >= 50 i < 100 (posortowane od największej do najmniejszej sumy ocen):
+Agregacje wykonane są w JavaScript (Aggregation Pipeline) oraz z wykorzystaniem MongoDB Python Driver.
+
+* **wyświetlenie sum oceny typów jedzenia dla sumy >= 50 i < 100 (posortowane od największej do najmniejszej sumy ocen):**
+
+JavaScript:
 ```sh
 db.restaurants.aggregate([
   { $group: {_id: "$type_of_food", totalRating: {$sum: "$rating"}} },
@@ -210,7 +156,30 @@ db.restaurants.aggregate([
   "ok": 1
 }
 ```
-* wyświetlenie średnich ocen dla wszystkich typów jedzenia posortowane według średniej oceny jedzenia:
+Python:
+```py
+import pymongo
+from pymongo import MongoClient
+client = MongoClient()
+
+db = client['restaurants']
+collection = db['resturants']
+
+pipeline = [
+  { "$group": {"_id": "$type_of_food", "totalRating": {"$sum": "$rating"}} },
+  { "$match": {"totalRating": {"$gte": 50, "$lt": 100}} },
+  { "$sort": {"totalRating": -1 } }
+]
+
+zapytanie = db.restaurants.aggregate(pipeline)
+for doc in zapytanie:
+   print(doc)
+```
+![zapytanie](img/dane1.png)
+
+* **wyświetlenie średnich ocen dla wszystkich typów jedzenia posortowane według średniej oceny jedzenia:**
+
+JavaScript:
 ```sh
 db.restaurants.aggregate([
   { $group: {_id: "$type_of_food", avgRating: {$avg: "$rating"}} },
@@ -430,7 +399,30 @@ db.restaurants.aggregate([
   "ok": 1
 }
 ```
-* wyświetlenie 10 typów jedzenia występujących najczęściej:
+Python:
+```py
+import pymongo
+from pymongo import MongoClient
+client = MongoClient()
+
+db = client['restaurants']
+collection = db['resturants']
+
+pipeline = [
+  { "$group": {"_id": "$type_of_food", "avgRating": {"$avg": "$rating"}} },
+  { "$sort": {"avgRating": -1 } }
+]
+
+zapytanie = db.restaurants.aggregate(pipeline)
+for doc in zapytanie:
+   print(doc)
+```
+![zapytanie](img/dane2a.png)
+![zapytanie](img/dane2b.png)
+
+* **wyświetlenie 10 typów jedzenia występujących najczęściej:**
+
+JavaScript:
 ```sh
 db.restaurants.aggregate([
   {"$group" : {"_id" : "$type_of_food", "count" : {"$sum" : 1}}},
@@ -482,7 +474,30 @@ db.restaurants.aggregate([
   "ok": 1
 }
 ```
-* wyświetlenie 10 typów jedzenia występujących najrzadziej:
+Python:
+```py
+import pymongo
+from pymongo import MongoClient
+client = MongoClient()
+
+db = client['restaurants']
+collection = db['resturants']
+
+pipeline = [
+  {"$group" : {"_id" : "$type_of_food", "count" : {"$sum" : 1}}},
+  {"$sort" : {"count" : -1}},
+  {"$limit" : 10}
+]
+
+zapytanie = db.restaurants.aggregate(pipeline)
+for doc in zapytanie:
+   print(doc)
+```
+![zapytanie](img/dane3.png)
+
+* **wyświetlenie 10 typów jedzenia występujących najrzadziej:**
+
+JavaScript:
 ```sh
 db.restaurants.aggregate([
   {"$group" : {"_id" : "$type_of_food", "count" : {"$sum" : 1}}},
@@ -534,3 +549,22 @@ db.restaurants.aggregate([
   "ok": 1
 }
 ```
+Python:
+```py
+import pymongo
+from pymongo import MongoClient
+client = MongoClient()
+
+db = client['restaurants']
+collection = db['resturants']
+
+pipeline = [
+  {"$group" : {"_id" : "$type_of_food", "count" : {"$sum" : 1}}},
+  {"$sort" : {"count" : 1}},
+  {"$limit" : 10}]
+
+zapytanie = db.restaurants.aggregate(pipeline)
+for doc in zapytanie:
+   print(doc)
+```
+![zapytanie](img/dane4.png)
