@@ -4,7 +4,7 @@ Rozwiązania zadań z przedmiotu *Bazy NoSQL*:
  - [x] EDA
  - [x] GeoJSON
 1. [Egzamin](egzamin.md)
- - [ ] Aggregation Pipeline
+ - [x] Aggregation Pipeline
 
 Informacje o komputerze na którym były wykonywane obliczenia:
 
