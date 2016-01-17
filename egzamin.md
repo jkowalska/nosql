@@ -501,6 +501,8 @@ for doc in zapytanie:
 
 W Wielkiej Brytanii najczęściej występują restauracje serwujące dania curry, pizzę, kuchnię chińską, kebaby oraz z frytkami.
 
+![chart](img/chart2.png)
+
 * **wyświetlenie 10 typów jedzenia występujących najrzadziej:**
 
 JavaScript:
@@ -577,3 +579,4 @@ for doc in zapytanie:
 
 W Wielkiej Brytanii najrzadziej występują restauracje serwujące dania z makaronu, ciasta, kuchnię punjabi, hiszpańską oraz nigeryjską.
 
+![chart](img/chart3.png)
