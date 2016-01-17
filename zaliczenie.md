@@ -181,6 +181,8 @@ db.reddit.aggregate([
   "ok": 1
 }
 ```
+![chart](img/chart1.png)
+
 * znajdź ostatni wpis w kolekcji:
 ```sh
 db.reddit.findOne( {$query:{}, $orderby:{$natural:-1}} )
