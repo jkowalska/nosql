@@ -100,6 +100,7 @@ Fetched 2 record(s) in 6ms
 ###Agregacje:
 
 Agregacje wykonane są w JavaScript (Aggregation Pipeline) oraz z wykorzystaniem MongoDB Python Driver.
+Do utworzenia wykresów skorzystałam z ze stron [bar-basic](http://www.highcharts.com/demo/bar-basic) oraz [pie-semi-circle](http://www.highcharts.com/demo/pie-semi-circle) i strony [jsfiddle.net](http://jsfiddle.net).
 
 * **wyświetlenie sum oceny typów jedzenia dla sumy >= 50 i < 100 (posortowane od największej do najmniejszej sumy ocen):**
 
@@ -502,6 +503,7 @@ for doc in zapytanie:
 W Wielkiej Brytanii najczęściej występują restauracje serwujące dania curry, pizzę, kuchnię chińską, kebaby oraz z frytkami.
 
 ![chart](img/chart2.png)
+![chart](img/chart4.png)
 
 * **wyświetlenie 10 typów jedzenia występujących najrzadziej:**
 
