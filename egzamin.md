@@ -425,6 +425,8 @@ for doc in zapytanie:
 
 Okazuje się, że najwyżej ocenione zostały restauracje podające dania z makaronu, kuchnię Punjabi, bagietki, lody oraz jedzenie typu Pick n Mix.
 
+![chart](img/chart5.png)
+
 * **wyświetlenie 10 typów jedzenia występujących najczęściej:**
 
 JavaScript:
