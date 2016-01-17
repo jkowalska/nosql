@@ -425,8 +425,6 @@ for doc in zapytanie:
 
 Okazuje się, że najwyżej ocenione zostały restauracje podające dania z makaronu, kuchnię Punjabi, bagietki, lody oraz jedzenie typu Pick n Mix.
 
-![chart](img/chart5.png)
-
 * **wyświetlenie 10 typów jedzenia występujących najczęściej:**
 
 JavaScript:
@@ -505,7 +503,6 @@ for doc in zapytanie:
 W Wielkiej Brytanii najczęściej występują restauracje serwujące dania curry, pizzę, kuchnię chińską, kebaby oraz z frytkami.
 
 ![chart](img/chart2.png)
-![chart](img/chart4.png)
 
 * **wyświetlenie 10 typów jedzenia występujących najrzadziej:**
 
