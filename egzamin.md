@@ -175,7 +175,9 @@ zapytanie = db.restaurants.aggregate(pipeline)
 for doc in zapytanie:
    print(doc)
 ```
-![zapytanie](img/dane1.png)
+![zapytanie]
+
+Wynika z tego, że powodzeniem cieszą się smakowite dania egzotycznych kuchni Bangladeszu, Peri Peri, Afrykańskiej, Japońskiej i Afgańskiej.
 
 * **wyświetlenie średnich ocen dla wszystkich typów jedzenia posortowane według średniej oceny jedzenia:**
 
@@ -420,6 +422,8 @@ for doc in zapytanie:
 ![zapytanie](img/dane2a.png)
 ![zapytanie](img/dane2b.png)
 
+Okazuje się, że najwyżej ocenione zostały restauracje podające dania z makaronu, kuchnię Punjabi, bagietki, lody oraz jedzenie typu Pick n Mix.
+
 * **wyświetlenie 10 typów jedzenia występujących najczęściej:**
 
 JavaScript:
@@ -495,6 +499,8 @@ for doc in zapytanie:
 ```
 ![zapytanie](img/dane3.png)
 
+W Wielkiej Brytanii najczęściej występują restauracje serwujące dania curry, pizzę, kuchnię chińską, kebaby oraz z frytkami.
+
 * **wyświetlenie 10 typów jedzenia występujących najrzadziej:**
 
 JavaScript:
@@ -568,3 +574,6 @@ for doc in zapytanie:
    print(doc)
 ```
 ![zapytanie](img/dane4.png)
+
+W Wielkiej Brytanii najrzadziej występują restauracje serwujące dania z makaronu, ciasta, kuchnię punjabi, hiszpańską oraz nigeryjską.
+
